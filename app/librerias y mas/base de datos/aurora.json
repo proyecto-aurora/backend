@@ -1,0 +1,165 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"aurora"},
+{"type":"table","name":"area","database":"aurora","data":
+[
+{"ID_Area":"1","Nombre_Area":"Trasformación digital","Descripcion_Area":"área para la trasformación digital","estados_ID_Estados":"1","Fecha_Creada":"2024-09-12 00:00:00","Fecha_Actualizacion":"2024-09-12 00:00:00"}
+]
+}
+,{"type":"table","name":"auth_group","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"auth_group_permissions","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"auth_permission","database":"aurora","data":
+[
+{"id":"1","name":"Can add log entry","content_type_id":"1","codename":"add_logentry"},
+{"id":"2","name":"Can change log entry","content_type_id":"1","codename":"change_logentry"},
+{"id":"3","name":"Can delete log entry","content_type_id":"1","codename":"delete_logentry"},
+{"id":"4","name":"Can view log entry","content_type_id":"1","codename":"view_logentry"},
+{"id":"5","name":"Can add permission","content_type_id":"2","codename":"add_permission"},
+{"id":"6","name":"Can change permission","content_type_id":"2","codename":"change_permission"},
+{"id":"7","name":"Can delete permission","content_type_id":"2","codename":"delete_permission"},
+{"id":"8","name":"Can view permission","content_type_id":"2","codename":"view_permission"},
+{"id":"9","name":"Can add group","content_type_id":"3","codename":"add_group"},
+{"id":"10","name":"Can change group","content_type_id":"3","codename":"change_group"},
+{"id":"11","name":"Can delete group","content_type_id":"3","codename":"delete_group"},
+{"id":"12","name":"Can view group","content_type_id":"3","codename":"view_group"},
+{"id":"13","name":"Can add user","content_type_id":"4","codename":"add_user"},
+{"id":"14","name":"Can change user","content_type_id":"4","codename":"change_user"},
+{"id":"15","name":"Can delete user","content_type_id":"4","codename":"delete_user"},
+{"id":"16","name":"Can view user","content_type_id":"4","codename":"view_user"},
+{"id":"17","name":"Can add content type","content_type_id":"5","codename":"add_contenttype"},
+{"id":"18","name":"Can change content type","content_type_id":"5","codename":"change_contenttype"},
+{"id":"19","name":"Can delete content type","content_type_id":"5","codename":"delete_contenttype"},
+{"id":"20","name":"Can view content type","content_type_id":"5","codename":"view_contenttype"},
+{"id":"21","name":"Can add session","content_type_id":"6","codename":"add_session"},
+{"id":"22","name":"Can change session","content_type_id":"6","codename":"change_session"},
+{"id":"23","name":"Can delete session","content_type_id":"6","codename":"delete_session"},
+{"id":"24","name":"Can view session","content_type_id":"6","codename":"view_session"}
+]
+}
+,{"type":"table","name":"auth_user","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"auth_user_groups","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"auth_user_user_permissions","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"cargo","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"django_admin_log","database":"aurora","data":
+[
+{"id":"1","action_time":"2024-09-10 21:41:30.089746","object_id":"2","object_repr":"Cargo object (2)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"7","user_id":"1"},
+{"id":"2","action_time":"2024-09-10 21:42:11.395284","object_id":"1","object_repr":"Estados object (1)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"10","user_id":"1"},
+{"id":"3","action_time":"2024-09-10 21:42:22.588856","object_id":"2","object_repr":"Estados object (2)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"10","user_id":"1"},
+{"id":"4","action_time":"2024-09-10 21:43:31.538776","object_id":"2","object_repr":"Area object (2)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"8","user_id":"1"},
+{"id":"5","action_time":"2024-09-10 21:43:54.670297","object_id":"2","object_repr":"Empleados object (2)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"9","user_id":"1"},
+{"id":"6","action_time":"2024-09-10 21:44:07.473177","object_id":"1","object_repr":"Prioridad object (1)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"11","user_id":"1"},
+{"id":"7","action_time":"2024-09-10 21:44:13.354260","object_id":"2","object_repr":"Prioridad object (2)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"11","user_id":"1"},
+{"id":"8","action_time":"2024-09-10 21:44:17.642208","object_id":"3","object_repr":"Prioridad object (3)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"11","user_id":"1"},
+{"id":"9","action_time":"2024-09-10 21:45:08.774021","object_id":"1","object_repr":"Proyecto object (1)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"12","user_id":"1"},
+{"id":"10","action_time":"2024-09-10 21:45:49.036183","object_id":"1","object_repr":"Tareas object (1)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"13","user_id":"1"},
+{"id":"11","action_time":"2024-09-10 21:46:36.830889","object_id":"1","object_repr":"Subtarea object (1)","action_flag":"1","change_message":"[{\"added\": {}}]","content_type_id":"14","user_id":"1"}
+]
+}
+,{"type":"table","name":"django_content_type","database":"aurora","data":
+[
+{"id":"1","app_label":"admin","model":"logentry"},
+{"id":"8","app_label":"app","model":"area"},
+{"id":"7","app_label":"app","model":"cargo"},
+{"id":"9","app_label":"app","model":"empleados"},
+{"id":"10","app_label":"app","model":"estados"},
+{"id":"11","app_label":"app","model":"prioridad"},
+{"id":"12","app_label":"app","model":"proyecto"},
+{"id":"14","app_label":"app","model":"subtarea"},
+{"id":"13","app_label":"app","model":"tareas"},
+{"id":"3","app_label":"auth","model":"group"},
+{"id":"2","app_label":"auth","model":"permission"},
+{"id":"4","app_label":"auth","model":"user"},
+{"id":"5","app_label":"contenttypes","model":"contenttype"},
+{"id":"6","app_label":"sessions","model":"session"}
+]
+}
+,{"type":"table","name":"django_migrations","database":"aurora","data":
+[
+{"id":"1","app":"contenttypes","name":"0001_initial","applied":"2024-09-10 20:58:54.382302"},
+{"id":"2","app":"auth","name":"0001_initial","applied":"2024-09-10 20:58:54.661479"},
+{"id":"3","app":"admin","name":"0001_initial","applied":"2024-09-10 20:58:54.738598"},
+{"id":"4","app":"admin","name":"0002_logentry_remove_auto_add","applied":"2024-09-10 20:58:54.745650"},
+{"id":"5","app":"admin","name":"0003_logentry_add_action_flag_choices","applied":"2024-09-10 20:58:54.752173"},
+{"id":"6","app":"contenttypes","name":"0002_remove_content_type_name","applied":"2024-09-10 20:58:54.785811"},
+{"id":"7","app":"auth","name":"0002_alter_permission_name_max_length","applied":"2024-09-10 20:58:54.814775"},
+{"id":"8","app":"auth","name":"0003_alter_user_email_max_length","applied":"2024-09-10 20:58:54.850035"},
+{"id":"9","app":"auth","name":"0004_alter_user_username_opts","applied":"2024-09-10 20:58:54.850035"},
+{"id":"10","app":"auth","name":"0005_alter_user_last_login_null","applied":"2024-09-10 20:58:54.883385"},
+{"id":"11","app":"auth","name":"0006_require_contenttypes_0002","applied":"2024-09-10 20:58:54.888231"},
+{"id":"12","app":"auth","name":"0007_alter_validators_add_error_messages","applied":"2024-09-10 20:58:54.901500"},
+{"id":"13","app":"auth","name":"0008_alter_user_username_max_length","applied":"2024-09-10 20:58:54.913027"},
+{"id":"14","app":"auth","name":"0009_alter_user_last_name_max_length","applied":"2024-09-10 20:58:54.913027"},
+{"id":"15","app":"auth","name":"0010_alter_group_name_max_length","applied":"2024-09-10 20:58:54.951244"},
+{"id":"16","app":"auth","name":"0011_update_proxy_permissions","applied":"2024-09-10 20:58:54.960522"},
+{"id":"17","app":"auth","name":"0012_alter_user_first_name_max_length","applied":"2024-09-10 20:58:54.969354"},
+{"id":"18","app":"sessions","name":"0001_initial","applied":"2024-09-10 20:58:54.997076"}
+]
+}
+,{"type":"table","name":"django_session","database":"aurora","data":
+[
+{"session_key":"lmlwlkgdpbdpvv7pl4m4fuimgmoidbmw","session_data":".eJxVjMsOwiAQRf-FtSHyaGFcuu83kBkYpGogKe3K-O_apAvd3nPOfYmA21rC1nkJcxIXocTpdyOMD647SHestyZjq-syk9wVedAup5b4eT3cv4OCvXxrbc4DuBGt90gwMGnr0QI4YMsuG0KTdfbk1MgRQUWvjWbjvDI5QwTx_gDN3jea:1so8VB:wcqgk2C_QLmLH84W2js0LtHp806LF8RdabnjVLrtF_M","expire_date":"2024-09-24 21:34:21.365375"}
+]
+}
+,{"type":"table","name":"empleados","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"empleados_proyecto","database":"aurora","data":
+[
+
+]
+}
+,{"type":"table","name":"estados","database":"aurora","data":
+[
+{"ID_Estados":"1","Nombre_estado":"activo","Fecha_Creacion":"2024-09-10 21:42:05","updated_at":"2024-09-10 21:42:10"},
+{"ID_Estados":"2","Nombre_estado":"inactivo","Fecha_Creacion":"2024-09-10 21:42:20","updated_at":"2024-09-10 21:42:21"}
+]
+}
+,{"type":"table","name":"prioridad","database":"aurora","data":
+[
+{"ID_Prioridad":"1","Nombre_prioridad":"alta"},
+{"ID_Prioridad":"2","Nombre_prioridad":"baja"},
+{"ID_Prioridad":"3","Nombre_prioridad":"media"}
+]
+}
+,{"type":"table","name":"proyecto","database":"aurora","data":
+[
+{"ID_Proyecto":"1","Nombre":"aurora","Descripcion":"aurora software","Duracion_estimada":"24","Estados_ID_Estados":"1","Prioridad_ID_Prioridad":"1","Fecha_Creacion":"2024-09-10 21:45:05","Fecha_Fin_Proyecto":"2024-09-10 21:45:08"}
+]
+}
+,{"type":"table","name":"subtarea","database":"aurora","data":
+[
+{"Id_subtarea":"1","Nombre":"model backend","Descripcion":"backend","Fecha_Creacion":"2024-09-10 21:46:30","Estados_ID_Estados":"1","Fecha_Fin":"2024-09-10 21:46:34","tareas_ID_Tareas":"1"}
+]
+}
+,{"type":"table","name":"tareas","database":"aurora","data":
+[
+{"ID_Tareas":"1","nombre":"backend","Descripcion":"backend","Duracion_estimada":"23","Prioridad_ID_Prioridad":"2","proyecto_ID_Proyecto":"1","Fecha_Creacion":"2024-09-10 21:45:46","Fecha_Fin":"2024-09-10 21:45:48"}
+]
+}
+]

@@ -1,0 +1,68 @@
+Documentación para Configuración y Gestión de Proyecto Django
+
+Este documento detalla los comandos necesarios para configurar y gestionar un proyecto Django, incluyendo la instalación de dependencias, manejo de migraciones y generación de archivos de requerimientos.
+
+Comandos
+1. Aplicar Migraciones a la Base de Datos
+
+
+python manage.py migrate
+
+Descripción: Aplica todas las migraciones pendientes a la base de datos para asegurar que la estructura de la base de datos esté actualizada según los modelos definidos en tu proyecto Django.
+
+2. Instalar Django
+
+
+pip install django
+
+Descripción: Instala Django, el framework web de Python para desarrollar aplicaciones web. Asegúrate de estar en tu entorno virtual antes de ejecutar este comando.
+
+3. Instalar django-cors-headers
+
+
+pip install django-cors-headers
+
+Descripción: Instala el paquete django-cors-headers, que permite manejar las solicitudes CORS (Cross-Origin Resource Sharing) en tu proyecto Django, facilitando la recepción de solicitudes desde dominios diferentes.
+
+4. Instalar drf-yasg
+
+
+pip install drf-yasg
+
+Descripción: Instala drf-yasg (Yet Another Swagger Generator), una herramienta para generar documentación interactiva de APIs para Django REST Framework. Proporciona una interfaz Swagger para tus endpoints de API.
+
+5. Instalar djangorestframework-simplejwt
+
+
+pip install djangorestframework-simplejwt
+
+Descripción: Instala el paquete djangorestframework-simplejwt, que proporciona soporte para JSON Web Tokens (JWT) en Django REST Framework, permitiendo la autenticación basada en tokens.
+
+6. Instalar djangorestframework
+
+
+pip install djangorestframework
+
+Descripción: Instala djangorestframework, un poderoso y flexible toolkit para construir APIs web en Django. Proporciona herramientas para crear y manejar APIs de manera eficiente.
+
+7. Instalar mysqlclient
+
+
+pip install mysqlclient
+
+Descripción: Instala mysqlclient, un cliente MySQL para Python. Es necesario para conectar tu aplicación Django con una base de datos MySQL.
+
+8. Generar el Archivo requirements.txt
+
+
+pip freeze > requirements.txt
+
+Descripción: Genera un archivo requirements.txt que lista todas las dependencias instaladas en tu entorno virtual. Este archivo puede ser usado para replicar el entorno en otros sistemas.
+
+9. Crear Migraciones a partir de Cambios en los Modelos
+
+
+python manage.py makemigrations
+
+Descripción: Crea nuevas migraciones para los cambios realizados en los modelos de tu aplicación. Esto prepara los cambios para ser aplicados a la base de datos.
+
