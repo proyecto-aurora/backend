@@ -6,6 +6,12 @@ class AreaSerializer(serializers.ModelSerializer):
         model = Area
         fields = '__all__'
 
+
+class LoginSerializer(serializers.Serializer):
+    login = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    
+
 class CargoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cargo

@@ -94,18 +94,17 @@ class Proyecto(models.Model):
 
 
 class Subtarea(models.Model):
-    id_subtarea = models.AutoField(db_column='Id_subtarea', primary_key=True)  # Field name made lowercase. The composite primary key (Id_subtarea, tareas_ID_Tareas) found, that is not supported. The first column is selected.
-    nombre = models.CharField(db_column='Nombre', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    descripcion = models.CharField(db_column='Descripcion', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    id_subtarea = models.AutoField(db_column='ID_Subtarea', primary_key=True)  # Field name made lowercase.
+    nombre_subtarea = models.CharField(db_column='Nombre_Subtarea', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    descripcion = models.CharField(db_column='Descripcion', max_length=450, blank=True, null=True)  # Field name made lowercase.
+    duracion_estimada = models.IntegerField(db_column='Duracion_estimada', blank=True, null=True)  # Field name made lowercase.
+    tareas_id_tareas = models.ForeignKey('Tareas', models.DO_NOTHING, db_column='Tareas_ID_Tareas')  # Field name made lowercase.
     fecha_creacion = models.DateTimeField(db_column='Fecha_Creacion')  # Field name made lowercase.
-    estados_id_estados = models.ForeignKey(Estados, models.DO_NOTHING, db_column='Estados_ID_Estados')  # Field name made lowercase.
     fecha_fin = models.DateTimeField(db_column='Fecha_Fin')  # Field name made lowercase.
-    tareas_id_tareas = models.ForeignKey('Tareas', models.DO_NOTHING, db_column='tareas_ID_Tareas')  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'subtarea'
-        unique_together = (('id_subtarea', 'tareas_id_tareas'),)
+        db_table = 'subtareas'
 
 
 class Tareas(models.Model):
