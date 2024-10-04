@@ -4,6 +4,8 @@ from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from django.views.generic import RedirectView
+from django.conf import settings
 
 # Importa las vistas y el router de la aplicación
 from app.views import (
@@ -38,12 +40,19 @@ schema_view = get_schema_view(
 
 # Configuración de URLs
 urlpatterns = [
+    path('', RedirectView.as_view(url='/api/', permanent=False)),  # Mantenemos la redirección
     path('admin/', admin.site.urls),  # Ruta para el admin de Django
-    path('api/', include(router.urls)),  # Añadimos versión a la API
+    path('api/', include(router.urls)),  # Cambiamos esta línea
     path('api/login/', LoginView.as_view(), name='empleados_login'),  # Asegúrate de que el slash final esté presente
     path('api/logout/', LogoutView.as_view(), name='empleados_logout'),  # Ruta para el logout
-    # Rutas para la documentación de Swagger
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # Documentación Swagger UI
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  # Documentación Redoc
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),  # Documentación Swagger en formato JSON
+    path('api/v1/', include((router.urls, 'v1'), namespace='v1')),  # Nueva ruta para versionado
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

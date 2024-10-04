@@ -67,6 +67,7 @@ class EstadosSerializer(serializers.ModelSerializer):
 class PrioridadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prioridad
-        fields = '__all__'
+        fields = ['id_prioridad', 'nombre_prioridad']
+        read_only_fields = ['id_prioridad']
 
 

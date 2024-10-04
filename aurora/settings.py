@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-change-th
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,192.168.56.1').split(',')
 
 # Application definition
 
@@ -43,12 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'rest_framework',
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     'drf_yasg',
     'corsheaders',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -93,6 +95,31 @@ WSGI_APPLICATION = 'aurora.wsgi.application'
 #     ),
 # }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'EXCEPTION_HANDLER': 'app.exceptions.custom_exception_handler'
+}
+
+# Configuración de Django Debug Toolbar
+INTERNAL_IPS = ['127.0.0.1']
+
+# Configuración de Sentry (comentada por ahora)
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
+
+# sentry_sdk.init(
+#     dsn="tu-dsn-de-sentry",
+#     integrations=[DjangoIntegration()],
+#     traces_sample_rate=1.0,
+#     send_default_pii=True
+# )
+
 
 
 
@@ -112,16 +139,26 @@ load_dotenv(dotenv_path)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': os.environ.get('DB_NAME', 'aurora'),
+        'USER': os.environ.get('DB_USER', 'pma'),  # Asegúrate de que sea 'pma'
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'tu_contraseña'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'TEST': {
+            'NAME': 'test_aurora',
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_unicode_ci',
+        },
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
+# Añade esta línea para deshabilitar la comprobación de versión de MariaDB
+SILENCED_SYSTEM_CHECKS = ['django.db.backends.mysql.W002']
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 
 # Password validation
@@ -165,3 +202,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'app.Empleados'

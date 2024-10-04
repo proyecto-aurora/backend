@@ -1,8 +1,10 @@
 from django.contrib.auth.hashers import make_password, check_password
-from rest_framework import viewsets, status
+from django.contrib.auth import authenticate, login as auth_login, logout
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from .models import Area, Cargo, Empleados, Proyecto, Tareas, Subtarea, Estados, Prioridad
 from .serializers import (
     AreaSerializer, CargoSerializer, EmpleadosSerializer,
@@ -10,25 +12,29 @@ from .serializers import (
     EstadosSerializer, PrioridadSerializer, LoginSerializer, LogoutSerializer
 )
 
-# Vistas para los modelos
-class AreaViewSet(viewsets.ModelViewSet):
+class BaseViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]  # Cambia a IsAuthenticated para requerir autenticación
+
+class AreaViewSet(BaseViewSet):
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
 
-class CargoViewSet(viewsets.ModelViewSet):
+class CargoViewSet(BaseViewSet):
     queryset = Cargo.objects.all()
     serializer_class = CargoSerializer
 
-class EmpleadosViewSet(viewsets.ModelViewSet):
+class EmpleadosViewSet(BaseViewSet):
     queryset = Empleados.objects.all()
     serializer_class = EmpleadosSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
-        """Sobrescribe el método perform_create para encriptar la contraseña antes de guardar"""
-        contrasena = serializer.validated_data.get('contrasena')
-        if contrasena:
-            serializer.validated_data['contrasena'] = make_password(contrasena)
         serializer.save()
 
     def perform_update(self, serializer):
@@ -38,53 +44,39 @@ class EmpleadosViewSet(viewsets.ModelViewSet):
             serializer.validated_data['contrasena'] = make_password(contrasena)
         serializer.save()
 
-# Vista para el Login
-class LoginView(APIView):
-    permission_classes = [AllowAny]
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data
-            return Response({
-                'message': 'Login exitoso',
-                'nombres': user.nombres,
-                'apellidos': user.apellidos,
-                'correo_electronico': user.correo_electronico,
-                'celular': user.celular,
-                'login': user.login,
-                'cargo': user.cargo_id
-            }, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
-
-# Vista para el Logout
-class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = LogoutSerializer
-
-    def post(self, request):
-        # Aquí puedes añadir lógica adicional si es necesario, como invalidar tokens
-        serializer = self.serializer_class()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-# Vistas para el resto de los modelos
-class ProyectoViewSet(viewsets.ModelViewSet):
-    queryset = Proyecto.objects.all()
+class ProyectoViewSet(BaseViewSet):
+    queryset = Proyecto.objects.select_related('estados_id_estados', 'prioridad_id_prioridad').all()
     serializer_class = ProyectoSerializer
 
-class TareasViewSet(viewsets.ModelViewSet):
+class TareasViewSet(BaseViewSet):
     queryset = Tareas.objects.all()
     serializer_class = TareasSerializer
 
-class SubtareaViewSet(viewsets.ModelViewSet):
+class SubtareaViewSet(BaseViewSet):
     queryset = Subtarea.objects.all()
     serializer_class = SubtareaSerializer
 
-class EstadosViewSet(viewsets.ModelViewSet):
+class EstadosViewSet(BaseViewSet):
     queryset = Estados.objects.all()
     serializer_class = EstadosSerializer
 
-class PrioridadViewSet(viewsets.ModelViewSet):
+class PrioridadViewSet(BaseViewSet):
     queryset = Prioridad.objects.all()
     serializer_class = PrioridadSerializer
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        login = request.data.get('login')
+        contrasena = request.data.get('contrasena')
+        user = authenticate(request, username=login, password=contrasena)
+        if user is not None:
+            auth_login(request, user)
+            return Response({'message': 'Login exitoso'}, status=status.HTTP_200_OK)
+        return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LogoutView(APIView):
+    def post(self, request):
+        logout(request)
+        return Response({'message': 'Logout exitoso'}, status=status.HTTP_200_OK)
