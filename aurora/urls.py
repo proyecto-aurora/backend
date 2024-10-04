@@ -8,19 +8,19 @@ from rest_framework import permissions
 # Importa las vistas y el router de la aplicación
 from app.views import (
     AreaViewSet, CargoViewSet, EmpleadosViewSet, ProyectoViewSet,
-    TareasViewSet, SubtareaViewSet, EstadosViewSet, PrioridadViewSet, LoginView
+    TareasViewSet, SubtareaViewSet, EstadosViewSet, PrioridadViewSet, LoginView, LogoutView
 )
 
 # Configuración del router para las vistas API
 router = DefaultRouter()
-router.register(r'area', AreaViewSet)
-router.register(r'cargo', CargoViewSet)
+router.register(r'areas', AreaViewSet)
+router.register(r'cargos', CargoViewSet)
 router.register(r'empleados', EmpleadosViewSet)
-router.register(r'proyecto', ProyectoViewSet)
-router.register(r'tarea', TareasViewSet)
-router.register(r'subtarea', SubtareaViewSet)  # Cambiado de subtareas a subtarea
+router.register(r'proyectos', ProyectoViewSet)
+router.register(r'tareas', TareasViewSet)
+router.register(r'subtareas', SubtareaViewSet)
 router.register(r'estados', EstadosViewSet)
-router.register(r'prioridad', PrioridadViewSet)
+router.register(r'prioridades', PrioridadViewSet)
 
 # Configuración de Swagger para la documentación
 schema_view = get_schema_view(
@@ -39,9 +39,9 @@ schema_view = get_schema_view(
 # Configuración de URLs
 urlpatterns = [
     path('admin/', admin.site.urls),  # Ruta para el admin de Django
-    path('api/', include(router.urls)),  # Rutas de la API generadas por el router
-    path('api/login/', LoginView.as_view(), name='empleados_login'),  # Ruta para login
-
+    path('api/', include(router.urls)),  # Añadimos versión a la API
+    path('api/login/', LoginView.as_view(), name='empleados_login'),  # Asegúrate de que el slash final esté presente
+    path('api/logout/', LogoutView.as_view(), name='empleados_logout'),  # Ruta para el logout
     # Rutas para la documentación de Swagger
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # Documentación Swagger UI
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  # Documentación Redoc

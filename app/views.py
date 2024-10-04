@@ -2,17 +2,19 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from .models import Area, Cargo, Empleados, Proyecto, Tareas, Subtarea, Estados, Prioridad
 from .serializers import (
     AreaSerializer, CargoSerializer, EmpleadosSerializer,
     ProyectoSerializer, TareasSerializer, SubtareaSerializer,
-    EstadosSerializer, PrioridadSerializer
+    EstadosSerializer, PrioridadSerializer, LoginSerializer, LogoutSerializer
 )
 
 # Vistas para los modelos
 class AreaViewSet(viewsets.ModelViewSet):
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class CargoViewSet(viewsets.ModelViewSet):
     queryset = Cargo.objects.all()
@@ -38,39 +40,33 @@ class EmpleadosViewSet(viewsets.ModelViewSet):
 
 # Vista para el Login
 class LoginView(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = LoginSerializer
+
     def post(self, request):
-        # Obtener los datos de login y contraseña
-        login = request.data.get('login')
-        contrasena = request.data.get('contrasena')
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data
+            return Response({
+                'message': 'Login exitoso',
+                'nombres': user.nombres,
+                'apellidos': user.apellidos,
+                'correo_electronico': user.correo_electronico,
+                'celular': user.celular,
+                'login': user.login,
+                'cargo': user.cargo_id
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
-        # Verificar si los campos login y contrasena están presentes
-        if not login or not contrasena:
-            return Response({'error': 'Por favor proporciona login y contraseña.'}, status=status.HTTP_400_BAD_REQUEST)
+# Vista para el Logout
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LogoutSerializer
 
-        try:
-            # Buscar el empleado por el campo de login
-            empleado = Empleados.objects.get(login=login)
-            
-            # Validar la contraseña encriptada
-            if check_password(contrasena, empleado.contrasena):
-                # Retornar un mensaje de éxito y los datos del empleado
-                return Response({
-                    'message': 'Login exitoso',
-                    'nombres': empleado.nombres,
-                    'apellidos': empleado.apellidos,
-                    'correo_electronico': empleado.correo_electronico,
-                    'celular': empleado.celular,
-                    'login': empleado.login,
-                    'cargo': empleado.cargo_id
-                    
-                    
-                }, status=status.HTTP_200_OK)
-            else:
-                # Retornar un error si la contraseña es incorrecta
-                return Response({'mensaje': 'login o contraseña incorrecta'}, status=status.HTTP_401_UNAUTHORIZED)
-        except Empleados.DoesNotExist:
-            # Retornar un error si el empleado no existe
-            return Response({'mensaje': 'login o contraseña incorrecta'}, status=status.HTTP_404_NOT_FOUND)
+    def post(self, request):
+        # Aquí puedes añadir lógica adicional si es necesario, como invalidar tokens
+        serializer = self.serializer_class()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Vistas para el resto de los modelos
 class ProyectoViewSet(viewsets.ModelViewSet):

@@ -6,7 +6,7 @@ from rest_framework import permissions
 from .views import (
     AreaViewSet, CargoViewSet, EmpleadosViewSet, ProyectoViewSet, 
     TareasViewSet, SubtareaViewSet, EstadosViewSet, PrioridadViewSet, 
-    LoginView  # Asegúrate de importar LoginView
+    LoginView, LogoutView
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -42,6 +42,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('api/', include(router.urls)),  # Rutas de la API
     path('api/empleados/login/', LoginView.as_view(), name='empleados_login'),  # Ruta para login
+    path('api/empleados/logout/', LogoutView.as_view(), name='empleados_logout'),  # Ruta para logout
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  
